@@ -7,12 +7,17 @@ mod scanner;
 mod lexer_types;
 
 
-
 fn main() {
 	loop {
-		let mut scanner = scanner::scanner::new(input("> ").unwrap());
-		scanner.scan_tokens();
-		println!("{:#?}", scanner.get_tokens());
+		let code = input("> ").unwrap();
+		match code.as_str() {
+			"exit" => std::process::exit(0),
+			_ =>  {
+				let mut scanner = scanner::scanner::new(code);
+				scanner.scan_tokens();
+				println!("{:#?}", scanner.get_tokens());
+			}
+		}
 	}
 }
 
