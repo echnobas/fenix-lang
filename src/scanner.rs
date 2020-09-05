@@ -65,6 +65,13 @@ impl scanner {
 			'+' => self.add_token(lexer_types::TokenType::PLUS),
 			';' => self.add_token(lexer_types::TokenType::SEMICOLON),
 			'*' => self.add_token(lexer_types::TokenType::STAR),
+			'=' => {
+				if self.peek() == '=' {
+					self.add_token(lexer_types::TokenType::EQUAL_EQUAL);
+				} else {
+					self.add_token(lexer_types::TokenType::EQUAL);
+				}
+			},
 			'"' => {
 				self.string();
 			}
