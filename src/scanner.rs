@@ -65,6 +65,13 @@ impl scanner {
 			'+' => self.add_token(lexer_types::TokenType::PLUS),
 			';' => self.add_token(lexer_types::TokenType::SEMICOLON),
 			'*' => self.add_token(lexer_types::TokenType::STAR),
+			'=' => {
+				if self.peek() == '=' {
+					self.add_token(lexer_types::TokenType::EQUAL_EQUAL);
+				} else {
+					self.add_token(lexer_types::TokenType::EQUAL);
+				}
+			},
 			'"' => {
 				self.string();
 			}
@@ -85,7 +92,7 @@ impl scanner {
 				} else if self.is_alpha(c) {
 					self.identifier();
 				} else {
-					panic!("Unexpected character at line {}", self.line);
+					panic!("Unexpected character at line {} `{}`", self.line, c);
 				}
 			}
 		}

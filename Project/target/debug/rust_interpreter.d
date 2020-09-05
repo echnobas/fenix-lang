@@ -1,1 +1,0 @@
-C:\Users\emana\Desktop\fenix-lang\Project\target\debug\rust_interpreter.exe: C:\Users\emana\Desktop\fenix-lang\Project\src\lexer_types.rs C:\Users\emana\Desktop\fenix-lang\Project\src\main.rs C:\Users\emana\Desktop\fenix-lang\Project\src\scanner.rs
