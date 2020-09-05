@@ -1,0 +1,1 @@
+C:\Users\Esquire\Desktop\rust_interpreter\target\debug\rust_interpreter.exe: C:\Users\Esquire\Desktop\rust_interpreter\src\lexer_types.rs C:\Users\Esquire\Desktop\rust_interpreter\src\main.rs C:\Users\Esquire\Desktop\rust_interpreter\src\scanner.rs
