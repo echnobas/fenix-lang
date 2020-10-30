@@ -1,56 +1,38 @@
 use crate::lexer_types::*;
-use std::any::type_name;
-use eval::{eval, to_value};
+use crate::scanner;
+use crate::expr;
 
 pub struct Parser {
 	tokens: Vec<Token>,
-	current: i32
+	current: i32,
+	in_func_dec: bool
 }
 
-impl Parser {
-	fn new(tokens: Vec<Token>) -> Parser {
-		{ tokens: tokens, current: 0 }
-	}
-
-	fn expression(&self) {
-		self.equality()
-	}
-
-	fn equality(&self) {
-		let expr = self.comparison();
-
-		while match_(vec![TokenType::BANG_EQUAL, TokenType::EQUAL_EQUAL]) {
-			let operator = self.previous();
-			let right = self.comparison();
-			expr = eval("{} {} {}", expr, operator, right);
+impl Default for Parser {
+	fn default() -> Parser {
+		Parser {
+			tokens: Vec::new(),
+			current: 0,
+			in_func_dec: false
 		}
 	}
+}
+pub fn parse(tokens: Vec<Token>) {
+	let mut p = Parser {
+		tokens,
+		..Default::default()
+	};
 
-	fn match_(&self, types: Vec<TokenType>) -> bool {
-		for type_ in types {
-			if self.check(type) {
-				self.advance();
-				return true;
+	let stmts_or_err = p.parse();
+	match stmts_or_err {
+		Ok(v) => {
+			if !p.is_at_end() {
+				let tok = &p.tokens[p.current];
+				Err(format!(
+					"unexpected token of type {:?} at line = {}, col = {}",
+					tok.ty, tok.line, tok.col
+				))
 			}
 		}
-		false
-	}
-
-	fn check(&self, type_: TokenType) {
-		if !self.is_at_end() return false;
-		type_name(self.peek()) == type_name(type_)
-	}
-
-	fn advance(&mut self) {
-		if !self.is_at_end() { self.current += 1; }
-		self.previous()
-	}
-
-	fn is_at_end() -> bool {
-		type_name(self.peek()) == type_name(TokenType::EOF)
-	}
-
-	fn peek() -> Token {
-		self.source.chars().nth((self.current - 1) as usize)
 	}
 }

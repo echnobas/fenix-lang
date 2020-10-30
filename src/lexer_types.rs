@@ -29,7 +29,7 @@ pub struct Token {
 
 impl Token {
 	pub fn new(type_: TokenType, lexeme: String, line: i32) -> Token {
-		Token { type_: type_, lexeme: lexeme, line: line }
+		Token { type_, lexeme, line }
 	}
 
 	pub fn to_string(&self) -> String {
